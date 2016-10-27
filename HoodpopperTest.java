@@ -39,5 +39,35 @@ public class HoodpopperTest {
     String elementText = e.getText();
     assertTrue(elementText.contains("Compile"));
   }
+  
+  @Test
+  public void testTokenizeHasBackLink() {
+	driver.findElement(By.name("commit")).click();
+	try {
+		driver.findElement(By.linkText("Back"));
+	} catch (NoSuchElementException nseex) {
+		fail();
+	}
+  }
+  
+  @Test
+  public void testParseHasBackLink() {
+	driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
+	try {
+		driver.findElement(By.linkText("Back"));
+	} catch (NoSuchElementException nseex) {
+		fail();
+	}
+  }
+  
+  @Test
+  public void testCompileHasBackLink() {
+	driver.findElement(By.xpath("(//input[@name='commit'])[3]")).click();
+	try {
+		driver.findElement(By.linkText("Back"));
+	} catch (NoSuchElementException nseex) {
+		fail();
+	}
+  }
 
 }
