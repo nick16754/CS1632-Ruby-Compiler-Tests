@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import org.junit.runner.*;
 import org.junit.runner.notification.*;
 
-public class TestRunner {
+public class TestRunner{
     public static void main(String[] args) {
 
 	ArrayList<Class> classesToTest = new ArrayList<Class>();

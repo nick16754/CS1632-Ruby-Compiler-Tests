@@ -12,7 +12,32 @@ public class HoodpopperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		driver.get("");
+		driver.get("http://lit-bayou-7912.herokuapp.com/");
 	}
+
+
+  @Test
+  public void testTokenizeButton() {
+    driver.findElement(By.name("commit")).click();
+    WebElement e = driver.findElement(By.cssSelector("h1"));
+    String elementText = e.getText();
+    assertTrue(elementText.contains("Tokenize"));
+  }
+
+  @Test
+  public void testParseButton() {
+    driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
+    WebElement e = driver.findElement(By.cssSelector("h1"));
+    String elementText = e.getText();
+    assertTrue(elementText.contains("Parse"));
+  }
+
+  @Test
+  public void testCompileButton() {
+    driver.findElement(By.xpath("(//input[@name='commit'])[3]")).click();
+    WebElement e = driver.findElement(By.cssSelector("h1"));
+    String elementText = e.getText();
+    assertTrue(elementText.contains("Compile"));
+  }
 
 }
