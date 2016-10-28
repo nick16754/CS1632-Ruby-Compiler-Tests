@@ -180,6 +180,54 @@ public class HoodpopperTest {
     String elementText = e.getText();
     assertFalse(elementText.contains(":on_op"));
   }
+  
+  //Defect in Hoodpopper: this test will fail
+  @Test
+  public void testParseOnlyOperator(){
+	driver.findElement(By.id("code_code")).clear();
+    driver.findElement(By.id("code_code")).sendKeys("+");
+	try {
+	driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
+	WebElement e = driver.findElement(By.xpath("//p[2]"));
+	String AST = e.getText();
+	assertTrue(AST.contains("+"));
+	} catch(NoSuchElementException nseex) {
+		fail();
+	}
+  }
+  
+  //Edge case
+  //Defect in Hoodpopper: this test will fail
+  @Test
+  public void testParseOnlySpecialChar() {
+	driver.findElement(By.id("code_code")).clear();
+    driver.findElement(By.id("code_code")).sendKeys("!");
+	try {
+		driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
+		WebElement e = driver.findElement(By.xpath("//p[2]"));
+		String AST = e.getText();
+		assertTrue(AST.contains("!"));	
+	} catch(NoSuchElementException nseex) {
+		fail();
+	}
+  }
+  
+  @Test
+  public void testParseShowsCorrectTokensInAST() {
+	driver.findElement(By.id("code_code")).clear();
+    driver.findElement(By.id("code_code")).sendKeys("puts hello 3.14159");
+	try {
+		driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
+		WebElement e = driver.findElement(By.xpath("//p[2]"));
+		String AST = e.getText();
+		assertTrue(AST.contains("puts"));	
+		assertTrue(AST.contains("hello"));
+		assertTrue(AST.contains("3.14159"));
+	} catch(NoSuchElementException nseex) {
+		fail();
+	}
+  }
+  
 
 //Check that the tree is the same for two different inputs when the only
 //difference between the imputs its added whitespace
