@@ -69,5 +69,36 @@ public class HoodpopperTest {
 		fail();
 	}
   }
+  
+  @Test
+  public void testFunctionPutsIsIdentifier() {
+	driver.findElement(By.id("code_code")).clear();
+    driver.findElement(By.id("code_code")).sendKeys("puts");
+    driver.findElement(By.name("commit")).click();
+	WebElement e = driver.findElement(By.cssSelector("p"));
+	String tokenized = e.getText();
+	assertTrue(tokenized.contains(":on_ident, \"puts\""));
+  }
+  
+  @Test
+  public void testVariableAIsIdentifier() {
+	driver.findElement(By.id("code_code")).clear();
+    driver.findElement(By.id("code_code")).sendKeys("a");
+    driver.findElement(By.name("commit")).click();
+	WebElement e = driver.findElement(By.cssSelector("p"));
+	String tokenized = e.getText();
+	assertTrue(tokenized.contains(":on_ident, \"a\""));
+  }
+  
+  //edge case: combination of function and string is identifier
+  @Test
+  public void testVariablePutsaIsIdentifier() {
+	driver.findElement(By.id("code_code")).clear();
+    driver.findElement(By.id("code_code")).sendKeys("putsa");
+    driver.findElement(By.name("commit")).click();
+	WebElement e = driver.findElement(By.cssSelector("p"));
+	String tokenized = e.getText();
+	assertTrue(tokenized.contains(":on_ident, \"putsa\""));
+  }
 
 }
