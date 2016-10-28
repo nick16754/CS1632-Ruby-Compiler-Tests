@@ -49,6 +49,7 @@ public class HoodpopperTest {
     assertTrue(elementText.contains("Compile"));
   }
 
+  //Test the tokenize page has a back link
   @Test
   public void testTokenizeHasBackLink() {
 	driver.findElement(By.name("commit")).click();
@@ -59,6 +60,7 @@ public class HoodpopperTest {
 	}
   }
 
+  //Test that parse page has a back link
   @Test
   public void testParseHasBackLink() {
 	driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
@@ -69,6 +71,7 @@ public class HoodpopperTest {
 	}
   }
 
+  //Test that compile page has a back link
   @Test
   public void testCompileHasBackLink() {
 	driver.findElement(By.xpath("(//input[@name='commit'])[3]")).click();
@@ -180,7 +183,7 @@ public class HoodpopperTest {
     String elementText = e.getText();
     assertFalse(elementText.contains(":on_op"));
   }
-  
+
   //Defect in Hoodpopper: this test will fail
   @Test
   public void testParseOnlyOperator(){
@@ -195,7 +198,7 @@ public class HoodpopperTest {
 		fail();
 	}
   }
-  
+
   //Edge case
   //Defect in Hoodpopper: this test will fail
   @Test
@@ -206,12 +209,12 @@ public class HoodpopperTest {
 		driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
 		WebElement e = driver.findElement(By.xpath("//p[2]"));
 		String AST = e.getText();
-		assertTrue(AST.contains("!"));	
+		assertTrue(AST.contains("!"));
 	} catch(NoSuchElementException nseex) {
 		fail();
 	}
   }
-  
+
   @Test
   public void testParseShowsCorrectTokensInAST() {
 	driver.findElement(By.id("code_code")).clear();
@@ -220,14 +223,14 @@ public class HoodpopperTest {
 		driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
 		WebElement e = driver.findElement(By.xpath("//p[2]"));
 		String AST = e.getText();
-		assertTrue(AST.contains("puts"));	
+		assertTrue(AST.contains("puts"));
 		assertTrue(AST.contains("hello"));
 		assertTrue(AST.contains("3.14159"));
 	} catch(NoSuchElementException nseex) {
 		fail();
 	}
   }
-  
+
 
 //Check that the tree is the same for two different inputs when the only
 //difference between the imputs its added whitespace
