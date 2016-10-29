@@ -199,13 +199,13 @@ public class HoodpopperTest {
   @Test
   public void testParseShowsCorrectTokensInAST() {
 	driver.findElement(By.id("code_code")).clear();
-    driver.findElement(By.id("code_code")).sendKeys("puts hello 3.14159");
+    driver.findElement(By.id("code_code")).sendKeys("puts + 3.14159");
 	try {
 		driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
 		WebElement e = driver.findElement(By.xpath("//p[2]"));
 		String AST = e.getText();
 		assertTrue(AST.contains("puts"));	
-		assertTrue(AST.contains("hello"));
+		assertTrue(AST.contains("+"));
 		assertTrue(AST.contains("3.14159"));
 	} catch(NoSuchElementException nseex) {
 		fail();
