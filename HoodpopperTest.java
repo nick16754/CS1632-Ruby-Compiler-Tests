@@ -10,19 +10,25 @@ public class HoodpopperTest {
 
 	static WebDriver driver = new HtmlUnitDriver();
 
+	// Start at the home page for Hoodpopper for each test
 	@Before
 	public void setUp() throws Exception {
 		driver.get("http://lit-bayou-7912.herokuapp.com/");
 	}
 
-  //The homepage of the website should have the title: Hoodpopper
+  // Given that I am on the main page
+  // When I view the title
+  // Then I see that it contains the word "Hoodpopper"
   @Test
 	public void testShowsCorrectTitle() {
 		String title = driver.getTitle();
 		assertTrue(title.contains("Hoodpopper"));
 	}
 
-  //When tokenize is clicked the user should go to a page with the title tokenize
+  // Given that I am on the main page
+  // When I click on the "Tokenize" button
+  // Then I should be redirected to the page entitled
+  // "Hood Popped - Tokenize Operation" which contains the word "Tokenize"
   @Test
   public void testTokenizeButton() {
     driver.findElement(By.name("commit")).click();
@@ -31,7 +37,10 @@ public class HoodpopperTest {
     assertTrue(elementText.contains("Tokenize"));
   }
 
-  //When parse is clicked the user should go to a page with the title parse
+  // Given that I am on the main page
+  // When I click on the "Parse" button
+  // Then I should be redirected to the page entitled
+  // "Hood Popped - Parse Operation" which contains the word "Parse"
   @Test
   public void testParseButton() {
     driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
@@ -40,7 +49,10 @@ public class HoodpopperTest {
     assertTrue(elementText.contains("Parse"));
   }
 
-  //When compile is clicked the user should go to a page with the title compile
+  // Given that I am on the main page
+  // When I click on the "Compile" button
+  // Then I should be redirected to the page entitled
+  // "Hood Popped - Compile Operation" which contains the word "Compile"
   @Test
   public void testCompileButton() {
     driver.findElement(By.xpath("(//input[@name='commit'])[3]")).click();
@@ -49,7 +61,9 @@ public class HoodpopperTest {
     assertTrue(elementText.contains("Compile"));
   }
 
-  //Test the tokenize page has a back link
+  // Given that I am on the main page
+  // When I click on the "Tokenize" button
+  // Then I should see that the "Tokenize" page contains the "Back" link
   @Test
   public void testTokenizeHasBackLink() {
 	driver.findElement(By.name("commit")).click();
@@ -60,7 +74,9 @@ public class HoodpopperTest {
 	}
   }
 
-  //Test that parse page has a back link
+  // Given that I am on the main page
+  // When I click on the "Parse" button
+  // Then I should see that the "Parse" page contains the "Back" link
   @Test
   public void testParseHasBackLink() {
 	driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
@@ -71,7 +87,9 @@ public class HoodpopperTest {
 	}
   }
 
-  //Test that compile page has a back link
+  // Given that I am on the main page
+  // When I click on the "Compile" button
+  // Then I should see that the "Compile" page contains the "Back" link
   @Test
   public void testCompileHasBackLink() {
 	driver.findElement(By.xpath("(//input[@name='commit'])[3]")).click();
@@ -81,7 +99,21 @@ public class HoodpopperTest {
 		fail();
 	}
   }
-
+  
+  // Given that I am on the main page
+  // When I click on the "Tokenize" button and then the "Back" link
+  // Then I should be redirected from the "Tokenize" page to the main page
+  @Test
+  public void testBackLink() {
+    driver.findElement(By.name("commit")).click();
+    driver.findElement(By.linkText("Back")).click();
+    String title = driver.getTitle();
+	assertTrue(title.contains("Hoodpopper"));
+  }
+  
+  // Given that I am on the main page
+  // When I type function "puts" into the Code box and click "Tokenize"
+  // Then "puts" should be tokenized as an identifier
   @Test
   public void testFunctionPutsIsIdentifier() {
 	driver.findElement(By.id("code_code")).clear();
@@ -92,6 +124,9 @@ public class HoodpopperTest {
 	assertTrue(tokenized.contains(":on_ident, \"puts\""));
   }
 
+  // Given that I am on the main page
+  // When I type variable "a" into the Code box and click "Tokenize"
+  // Then "a" should be tokenized as an identifier
   @Test
   public void testVariableAIsIdentifier() {
 	driver.findElement(By.id("code_code")).clear();
@@ -102,7 +137,10 @@ public class HoodpopperTest {
 	assertTrue(tokenized.contains(":on_ident, \"a\""));
   }
 
-  //edge case: combination of function and string is identifier
+  // Edge case: combination of function and string as identifier
+  // Given that I am on the main page
+  // When I type variable "putsa" into the Code box and click "Tokenize"
+  // Then "putsa" should be tokenized as an identifier
   @Test
   public void testVariablePutsaIsIdentifier() {
 	driver.findElement(By.id("code_code")).clear();
@@ -184,7 +222,10 @@ public class HoodpopperTest {
     assertFalse(elementText.contains(":on_op"));
   }
 
-  //Defect in Hoodpopper: this test will fail
+  // Defect in Hoodpopper: this test will fail
+  // Given that I am on the main page
+  // When I type operator "+" into the Code box and click "Parse"
+  // Then I should see "+" shown in the AST
   @Test
   public void testParseOnlyOperator(){
 	driver.findElement(By.id("code_code")).clear();
@@ -199,8 +240,11 @@ public class HoodpopperTest {
 	}
   }
 
-  //Edge case
-  //Defect in Hoodpopper: this test will fail
+  // Edge case: input special character
+  // Defect in Hoodpopper: this test will fail
+  // Given that I am on the main page
+  // When I type special character "!" into the Code box and click "Parse"
+  // Then I should see "!" shown in the AST
   @Test
   public void testParseOnlySpecialChar() {
 	driver.findElement(By.id("code_code")).clear();
@@ -215,6 +259,10 @@ public class HoodpopperTest {
 	}
   }
 
+  // Given that I am on the main page
+  // When I type the sequence of a function "puts", an operator "+",
+  // And a float "3.14159" into the Code box and click "Parse"
+  // Then I should see all three types shown in the AST
   @Test
   public void testParseShowsCorrectTokensInAST() {
 	driver.findElement(By.id("code_code")).clear();
@@ -223,13 +271,8 @@ public class HoodpopperTest {
 		driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
 		WebElement e = driver.findElement(By.xpath("//p[2]"));
 		String AST = e.getText();
-<<<<<<< HEAD
 		assertTrue(AST.contains("puts"));	
 		assertTrue(AST.contains("+"));
-=======
-		assertTrue(AST.contains("puts"));
-		assertTrue(AST.contains("hello"));
->>>>>>> 08066253c6a049cf6cceeb7840d65d2662a90633
 		assertTrue(AST.contains("3.14159"));
 	} catch(NoSuchElementException nseex) {
 		fail();
