@@ -32,10 +32,11 @@ public class HoodpopperTest {
   // "Hood Popped - Tokenize Operation" which contains the word "Tokenize"
   @Test
   public void testTokenizeButton() {
-	// Click on Tokenize button
+    // Click on Tokenize button
     driver.findElement(By.name("commit")).click();
     WebElement e = driver.findElement(By.cssSelector("h1"));
     String elementText = e.getText();
+    // The heading of the page should be Tokenize
     assertTrue(elementText.contains("Tokenize"));
   }
 
@@ -45,10 +46,11 @@ public class HoodpopperTest {
   // "Hood Popped - Parse Operation" which contains the word "Parse"
   @Test
   public void testParseButton() {
-	// Click on Parse button
+    // Click on Parse button
     driver.findElement(By.xpath("(//input[@name='commit'])[2]")).click();
     WebElement e = driver.findElement(By.cssSelector("h1"));
     String elementText = e.getText();
+    // Page heading should be Parse
     assertTrue(elementText.contains("Parse"));
   }
 
@@ -58,10 +60,11 @@ public class HoodpopperTest {
   // "Hood Popped - Compile Operation" which contains the word "Compile"
   @Test
   public void testCompileButton() {
-	// Click on Compile
+    // Click on Compile
     driver.findElement(By.xpath("(//input[@name='commit'])[3]")).click();
     WebElement e = driver.findElement(By.cssSelector("h1"));
     String elementText = e.getText();
+    // Page heading should be Compile
     assertTrue(elementText.contains("Compile"));
   }
 
@@ -127,7 +130,6 @@ public class HoodpopperTest {
 	try {
 		driver.findElement(By.name("commit"));
 	} catch (NoSuchElementException nseex) {
-		fail();
 	}
   }
   
